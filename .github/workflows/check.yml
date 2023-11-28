@@ -35,16 +35,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           show-progress: 'false'
+      - name: Build connect trailer
+        run: |
+          cd in-vehicle-stack
+          podman build -t trailer-connected -f scenarios/smart_trailer_use_case/digital_twin_providers/trailer_connected_provider/Dockerfile .
       - run: mkdir /tmp/logs
       - name: Start Ankaios
         run: eclipse-ankaios/scripts/run_maestro.sh > /tmp/logs/run_maestro.log &
       - name: Start trailer applications
         run: scenarios/smart_trailer_use_case/scripts/start_trailer_applications_ankaios.sh > /tmp/logs/start_trailer_applications_ankaios.log &
-      - name: Connect trailer
-        run: |
-          cd in-vehicle-stack/scenarios/smart_trailer_use_case/digital_twin_providers/trailer_connected_provider
-          podman build -t trailer-connected .
-          podman run -d -p 4020:4020 trailer-connected
+      - run: podman run -d -p 4020:4020 trailer-connected
       - name: Output logs
         run: tail -f /tmp/logs/*.log
 
