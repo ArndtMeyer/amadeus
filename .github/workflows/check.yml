@@ -16,10 +16,8 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: reitzig/texlive-base:2023.1
+      image: ghcr.io/eclipse-ankaios/app-ankaios-dev:0.2.0-rc1
       options: --user root
-      env:
-        SRC_DIR: /__w/biblatex-lni/biblatex-lni
 
     steps:
       - uses: awalsh128/cache-apt-pkgs-action@latest
