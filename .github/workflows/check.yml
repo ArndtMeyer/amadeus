@@ -45,7 +45,7 @@ jobs:
       - name: Start trailer applications
         run: scenarios/smart_trailer_use_case/scripts/start_trailer_applications_ankaios.sh > /tmp/logs/start_trailer_applications_ankaios.log &
       - run: |
-          podman run -d -p 4020:4020 trailer-connected
+          podman run -d -p 4020:4020 --name trailer-connected trailer-connected
           podman logs -f trailer-connected > /tmp/logs/ongoing_container.log &
       - name: Output logs
         run: tail -f /tmp/logs/*.log
