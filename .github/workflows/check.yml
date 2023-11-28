@@ -17,7 +17,7 @@ jobs:
 
     container:
       image: ghcr.io/eclipse-ankaios/app-ankaios-dev:0.2.0-rc1
-      options: --user root
+      options: --user root --privileged
 
     steps:
       - run: apt-get update
