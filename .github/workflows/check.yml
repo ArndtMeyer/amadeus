@@ -31,6 +31,10 @@ jobs:
           git config --global --add safe.directory '*'
           echo "if [ -f /etc/bash_completion ] && ! shopt -oq posix; then\n . /etc/bash_completion \nfi" >> /root/.bashrc
           echo 'export PATH=$PATH:/workspaces/app/scripts:/workspaces/app/in-vehicle-stack/scenarios/smart_trailer_use_case/scripts' >> /root/.bashrc
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          show-progress: 'false'
       - run: mkdir /tmp/logs
       - name: Start Ankaios
         run: eclipse-ankaios/scripts/run_maestro.sh > /tmp/logs/run_maestro.log &
