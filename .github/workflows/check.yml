@@ -42,7 +42,7 @@ jobs:
         run: scenarios/smart_trailer_use_case/scripts/start_trailer_applications_ankaios.sh > /tmp/logs/start_trailer_applications_ankaios.log &
       - name: Connect trailer
         run: |
-          cd in-vehicle-stack/scenarios/smart_trailer_use_case/applications/smart_trailer_application
+          cd in-vehicle-stack/scenarios/smart_trailer_use_case/digital_twin_providers/trailer_connected_provider
           podman build -t trailer-connected .
           podman run -d -p 4020:4020 trailer-connected
       - name: Output logs
