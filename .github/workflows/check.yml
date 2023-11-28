@@ -24,7 +24,7 @@ jobs:
       - run: apt-get install -y git jq
       - name: install yq
         run: |
-          curl -sL https://objects.githubusercontent.com/github-production-release-asset-2e65be/43225113/fb29f93d-2582-4ef2-90f7-bec4d2a549c6?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20231128%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231128T143413Z&X-Amz-Expires=300&X-Amz-Signature=9b63e53c88228e265bd10c3faaee1037787731826690b96ad06b2f8d99aec3d7&X-Amz-SignedHeaders=host&actor_id=1366654&key_id=0&repo_id=43225113&response-content-disposition=attachment%3B%20filename%3Dyq_linux_amd64&response-content-type=application%2Foctet-stream -o /usr/bin/yq \
+          curl -sL https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${TARGETARCH} -o /usr/bin/yq -o /usr/bin/yq
           chmod +x /usr/bin/yq
       - name: Tweak git config
         run: |
