@@ -47,6 +47,6 @@ jobs:
       - run: ank get workloads
       - name: Start trailer applications
         run: |
-          cd in-vehicle-stack/scenarios/smart_trailer_use_case/scripts/start_trailer_applications_ankaios.sh
+          cd in-vehicle-stack/scenarios/smart_trailer_use_case/scripts
           ./start_trailer_applications_ankaios.sh
       - run: ank get workloads
