@@ -20,6 +20,9 @@ jobs:
       options: --user root --privileged
 
     steps:
+      - name: Log in to Azure Container Registry
+        run: |
+          echo ${{ secrets.CONTAINER_REGISTRY_PASSWORD }} | podman login sdvblueprint.azurecr.io --username ${{ secrets.CONTAINER_REGISTRY_USERNAME }} --password-stdin
       - run: apt-get update
       - run: apt-get install -y git jq
       - name: install yq
@@ -31,22 +34,18 @@ jobs:
           git config --global --add safe.directory '*'
           echo "if [ -f /etc/bash_completion ] && ! shopt -oq posix; then\n . /etc/bash_completion \nfi" >> /root/.bashrc
           echo 'export PATH=$PATH:/workspaces/app/scripts:/workspaces/app/in-vehicle-stack/scenarios/smart_trailer_use_case/scripts' >> /root/.bashrc
+      - run: mkdir /tmp/logs
       - name: Checkout source
         uses: actions/checkout@v4
         with:
           show-progress: 'false'
-      - name: Build connect trailer
-        run: |
-          cd in-vehicle-stack
-          podman build -t trailer-connected -f scenarios/smart_trailer_use_case/digital_twin_providers/trailer_connected_provider/Dockerfile .
-      - run: mkdir /tmp/logs
       - name: Start Ankaios
-        run: eclipse-ankaios/scripts/run_maestro.sh > /tmp/logs/run_maestro.log &
+        run: |
+          cd eclipse-ankaios/scripts
+          ./run_maestro.sh
+      - run: ank get workloads
       - name: Start trailer applications
-        run: scenarios/smart_trailer_use_case/scripts/start_trailer_applications_ankaios.sh > /tmp/logs/start_trailer_applications_ankaios.log &
-      - run: |
-          podman run -d -p 4020:4020 --name trailer-connected trailer-connected
-          podman logs -f trailer-connected > /tmp/logs/ongoing_container.log &
-      - name: Output logs
-        run: tail -f /tmp/logs/*.log
-
+        run: |
+          cd scenarios/smart_trailer_use_case/scripts
+          ./start_trailer_applications_ankaios.sh
+      - run: ank get workloads
