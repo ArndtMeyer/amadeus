@@ -28,7 +28,7 @@ jobs:
       - run: apt-get install -y git jq
       - name: install yq
         run: |
-          curl -sL https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${TARGETARCH} -o /usr/bin/yq -o /usr/bin/yq
+          curl -sL https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${TARGETARCH} -o /usr/bin/yq
           chmod +x /usr/bin/yq
       - name: Tweak git config
         run: |
@@ -40,7 +40,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           show-progress: 'false'
-      - run: ls -la /usr/bin/yq
       - name: Start Ankaios
         run: |
           cd eclipse-ankaios/scripts
